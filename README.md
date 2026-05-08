@@ -1,114 +1,206 @@
-[npm-image]: https://img.shields.io/npm/v/mysql2.svg
-[npm-url]: https://npmjs.com/package/mysql2
-[node-version-image]: https://img.shields.io/node/v/mysql2.svg
-[node-version-url]: https://nodejs.org/en/download
-[downloads-image]: https://img.shields.io/npm/dm/mysql2.svg
-[downloads-url]: https://npmjs.com/package/mysql2
-[license-url]: https://github.com/sidorares/node-mysql2/blob/master/License
-[license-image]: https://img.shields.io/npm/l/mysql2.svg?maxAge=2592000
-[node-mysql]: https://github.com/mysqljs/mysql
-[mysqljs]: https://github.com/mysqljs
-[mysql-native]: https://github.com/sidorares/nodejs-mysql-native
-[sidorares]: https://github.com/sidorares
-[TooTallNate]: https://gist.github.com/TooTallNate
-[starttls.js]: https://gist.github.com/TooTallNate/848444
-[node-mariasql]: https://github.com/mscdex/node-mariasql
-[contributors]: https://github.com/sidorares/node-mysql2/graphs/contributors
-[contributing]: https://github.com/sidorares/node-mysql2/blob/master/Contributing.md
-[docs-base]: https://sidorares.github.io/node-mysql2/docs
-[docs-base-zh-CN]: https://sidorares.github.io/node-mysql2/zh-CN/docs
-[docs-base-pt-BR]: https://sidorares.github.io/node-mysql2/pt-BR/docs
-[docs-prepared-statements]: https://sidorares.github.io/node-mysql2/docs/documentation/prepared-statements
-[docs-mysql-server]: https://sidorares.github.io/node-mysql2/docs/documentation/mysql-server
-[docs-promise-wrapper]: https://sidorares.github.io/node-mysql2/docs/documentation/promise-wrapper
-[docs-authentication-switch]: https://sidorares.github.io/node-mysql2/docs/documentation/authentication-switch
-[docs-streams]: https://sidorares.github.io/node-mysql2/docs/documentation/extras
-[docs-typescript-docs]: https://sidorares.github.io/node-mysql2/docs/documentation/typescript-examples
-[docs-qs-pooling]: https://sidorares.github.io/node-mysql2/docs#using-connection-pools
-[docs-qs-first-query]: https://sidorares.github.io/node-mysql2/docs#first-query
-[docs-qs-using-prepared-statements]: https://sidorares.github.io/node-mysql2/docs#using-prepared-statements
-[docs-examples]: https://sidorares.github.io/node-mysql2/docs/examples
-[docs-faq]: https://sidorares.github.io/node-mysql2/docs/faq
-[docs-documentation]: https://sidorares.github.io/node-mysql2/docs/documentation
-[docs-contributing]: https://sidorares.github.io/node-mysql2/docs/contributing/website
-[coverage]: https://img.shields.io/codecov/c/github/sidorares/node-mysql2
-[coverage-url]: https://app.codecov.io/github/sidorares/node-mysql2
-[ci-url]: https://github.com/sidorares/node-mysql2/actions/workflows/ci-coverage.yml?query=branch%3Amaster
-[ci-image]: https://img.shields.io/github/actions/workflow/status/sidorares/node-mysql2/ci-coverage.yml?event=push&style=flat&label=CI&branch=master
+# is-glob [![NPM version](https://img.shields.io/npm/v/is-glob.svg?style=flat)](https://www.npmjs.com/package/is-glob) [![NPM monthly downloads](https://img.shields.io/npm/dm/is-glob.svg?style=flat)](https://npmjs.org/package/is-glob) [![NPM total downloads](https://img.shields.io/npm/dt/is-glob.svg?style=flat)](https://npmjs.org/package/is-glob) [![Build Status](https://img.shields.io/github/workflow/status/micromatch/is-glob/dev)](https://github.com/micromatch/is-glob/actions)
 
-# MySQL2
+> Returns `true` if the given string looks like a glob pattern or an extglob pattern. This makes it easy to create code that only uses external modules like node-glob when necessary, resulting in much faster code execution and initialization time, and a better user experience.
 
-[![NPM Version][npm-image]][npm-url]
-[![NPM Downloads][downloads-image]][downloads-url]
-[![Node.js Version][node-version-image]][node-version-url]
-[![GitHub Workflow Status (with event)][ci-image]][ci-url]
-[![Codecov][coverage]][coverage-url]
-[![License][license-image]][license-url]
+Please consider following this project's author, [Jon Schlinkert](https://github.com/jonschlinkert), and consider starring the project to show your :heart: and support.
 
-[English][docs-base] | [简体中文][docs-base-zh-CN] | [Português (BR)][docs-base-pt-BR]
+## Install
 
-> MySQL client for Node.js with focus on performance. Supports prepared statements, non-utf8 encodings, binary log protocol, compression, ssl [much more][docs-documentation].
+Install with [npm](https://www.npmjs.com/):
 
-**Table of Contents**
-
-- [History and Why MySQL2](#history-and-why-mysql2)
-- [Installation](#installation)
-- [Documentation](#documentation)
-- [Acknowledgements](#acknowledgements)
-- [Contributing](#contributing)
-
-## History and Why MySQL2
-
-MySQL2 project is a continuation of [MySQL-Native][mysql-native]. Protocol parser code was rewritten from scratch and api changed to match popular [Node MySQL][node-mysql]. MySQL2 team is working together with [Node MySQL][node-mysql] team to factor out shared code and move it under [mysqljs][mysqljs] organization.
-
-MySQL2 is mostly API compatible with [Node MySQL][node-mysql] and supports majority of features. MySQL2 also offers these additional features:
-
-- Faster / Better Performance
-- [Prepared Statements][docs-prepared-statements]
-- MySQL Binary Log Protocol
-- [MySQL Server][docs-mysql-server]
-- Extended support for Encoding and Collation
-- [Promise Wrapper][docs-promise-wrapper]
-- Compression
-- SSL and [Authentication Switch][docs-authentication-switch]
-- [Custom Streams][docs-streams]
-- [Pooling][docs-qs-pooling]
-
-## Installation
-
-MySQL2 is free from native bindings and can be installed on Linux, Mac OS or Windows without any issues.
-
-```bash
-npm install --save mysql2
+```sh
+$ npm install --save is-glob
 ```
 
-If you are using TypeScript, you will need to install `@types/node`.
+You might also be interested in [is-valid-glob](https://github.com/jonschlinkert/is-valid-glob) and [has-glob](https://github.com/jonschlinkert/has-glob).
 
-```bash
-npm install --save-dev @types/node
+## Usage
+
+```js
+var isGlob = require('is-glob');
 ```
 
-> For TypeScript documentation and examples, see [here][docs-typescript-docs].
+### Default behavior
 
-## Documentation
+**True**
 
-- [Quickstart][docs-base]
-  - [First Query][docs-qs-first-query], [Using Prepared Statements][docs-qs-using-prepared-statements], [Using Connection Pools][docs-qs-pooling] and more.
-- [Documentation][docs-documentation]
-- [Examples][docs-examples]
-- [FAQ][docs-faq]
+Patterns that have glob characters or regex patterns will return `true`:
 
-## Acknowledgements
+```js
+isGlob('!foo.js');
+isGlob('*.js');
+isGlob('**/abc.js');
+isGlob('abc/*.js');
+isGlob('abc/(aaa|bbb).js');
+isGlob('abc/[a-z].js');
+isGlob('abc/{a,b}.js');
+//=> true
+```
 
-- Internal protocol is written by [@sidorares][sidorares] [MySQL-Native][mysql-native].
-- Constants, SQL parameters interpolation, Pooling, `ConnectionConfig` class taken from [Node MySQL][node-mysql].
-- SSL upgrade code based on [@TooTallNate][TooTallNate] [code][starttls.js].
-- Secure connection / compressed connection api flags compatible to [MariaSQL][node-mariasql] client.
-- [Contributors][contributors].
+Extglobs
 
-## Contributing
+```js
+isGlob('abc/@(a).js');
+isGlob('abc/!(a).js');
+isGlob('abc/+(a).js');
+isGlob('abc/*(a).js');
+isGlob('abc/?(a).js');
+//=> true
+```
 
-Want to improve something in **MySQL2**?
-Please check [Contributing.md][contributing] for detailed instruction on how to get started.
+**False**
 
-To contribute in **MySQL2 Documentation**, please visit the [Website Contributing Guidelines][docs-contributing] for detailed instruction on how to get started.
+Escaped globs or extglobs return `false`:
+
+```js
+isGlob('abc/\\@(a).js');
+isGlob('abc/\\!(a).js');
+isGlob('abc/\\+(a).js');
+isGlob('abc/\\*(a).js');
+isGlob('abc/\\?(a).js');
+isGlob('\\!foo.js');
+isGlob('\\*.js');
+isGlob('\\*\\*/abc.js');
+isGlob('abc/\\*.js');
+isGlob('abc/\\(aaa|bbb).js');
+isGlob('abc/\\[a-z].js');
+isGlob('abc/\\{a,b}.js');
+//=> false
+```
+
+Patterns that do not have glob patterns return `false`:
+
+```js
+isGlob('abc.js');
+isGlob('abc/def/ghi.js');
+isGlob('foo.js');
+isGlob('abc/@.js');
+isGlob('abc/+.js');
+isGlob('abc/?.js');
+isGlob();
+isGlob(null);
+//=> false
+```
+
+Arrays are also `false` (If you want to check if an array has a glob pattern, use [has-glob](https://github.com/jonschlinkert/has-glob)):
+
+```js
+isGlob(['**/*.js']);
+isGlob(['foo.js']);
+//=> false
+```
+
+### Option strict
+
+When `options.strict === false` the behavior is less strict in determining if a pattern is a glob. Meaning that
+some patterns that would return `false` may return `true`. This is done so that matching libraries like [micromatch](https://github.com/micromatch/micromatch) have a chance at determining if the pattern is a glob or not.
+
+**True**
+
+Patterns that have glob characters or regex patterns will return `true`:
+
+```js
+isGlob('!foo.js', {strict: false});
+isGlob('*.js', {strict: false});
+isGlob('**/abc.js', {strict: false});
+isGlob('abc/*.js', {strict: false});
+isGlob('abc/(aaa|bbb).js', {strict: false});
+isGlob('abc/[a-z].js', {strict: false});
+isGlob('abc/{a,b}.js', {strict: false});
+//=> true
+```
+
+Extglobs
+
+```js
+isGlob('abc/@(a).js', {strict: false});
+isGlob('abc/!(a).js', {strict: false});
+isGlob('abc/+(a).js', {strict: false});
+isGlob('abc/*(a).js', {strict: false});
+isGlob('abc/?(a).js', {strict: false});
+//=> true
+```
+
+**False**
+
+Escaped globs or extglobs return `false`:
+
+```js
+isGlob('\\!foo.js', {strict: false});
+isGlob('\\*.js', {strict: false});
+isGlob('\\*\\*/abc.js', {strict: false});
+isGlob('abc/\\*.js', {strict: false});
+isGlob('abc/\\(aaa|bbb).js', {strict: false});
+isGlob('abc/\\[a-z].js', {strict: false});
+isGlob('abc/\\{a,b}.js', {strict: false});
+//=> false
+```
+
+## About
+
+<details>
+<summary><strong>Contributing</strong></summary>
+
+Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](../../issues/new).
+
+</details>
+
+<details>
+<summary><strong>Running Tests</strong></summary>
+
+Running and reviewing unit tests is a great way to get familiarized with a library and its API. You can install dependencies and run tests with the following command:
+
+```sh
+$ npm install && npm test
+```
+
+</details>
+
+<details>
+<summary><strong>Building docs</strong></summary>
+
+_(This project's readme.md is generated by [verb](https://github.com/verbose/verb-generate-readme), please don't edit the readme directly. Any changes to the readme must be made in the [.verb.md](.verb.md) readme template.)_
+
+To generate the readme, run the following command:
+
+```sh
+$ npm install -g verbose/verb#dev verb-generate-readme && verb
+```
+
+</details>
+
+### Related projects
+
+You might also be interested in these projects:
+
+* [assemble](https://www.npmjs.com/package/assemble): Get the rocks out of your socks! Assemble makes you fast at creating web projects… [more](https://github.com/assemble/assemble) | [homepage](https://github.com/assemble/assemble "Get the rocks out of your socks! Assemble makes you fast at creating web projects. Assemble is used by thousands of projects for rapid prototyping, creating themes, scaffolds, boilerplates, e-books, UI components, API documentation, blogs, building websit")
+* [base](https://www.npmjs.com/package/base): Framework for rapidly creating high quality, server-side node.js applications, using plugins like building blocks | [homepage](https://github.com/node-base/base "Framework for rapidly creating high quality, server-side node.js applications, using plugins like building blocks")
+* [update](https://www.npmjs.com/package/update): Be scalable! Update is a new, open source developer framework and CLI for automating updates… [more](https://github.com/update/update) | [homepage](https://github.com/update/update "Be scalable! Update is a new, open source developer framework and CLI for automating updates of any kind in code projects.")
+* [verb](https://www.npmjs.com/package/verb): Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used… [more](https://github.com/verbose/verb) | [homepage](https://github.com/verbose/verb "Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used on hundreds of projects of all sizes to generate everything from API docs to readmes.")
+
+### Contributors
+
+| **Commits** | **Contributor** |  
+| --- | --- |  
+| 47 | [jonschlinkert](https://github.com/jonschlinkert) |  
+| 5  | [doowb](https://github.com/doowb) |  
+| 1  | [phated](https://github.com/phated) |  
+| 1  | [danhper](https://github.com/danhper) |  
+| 1  | [paulmillr](https://github.com/paulmillr) |  
+
+### Author
+
+**Jon Schlinkert**
+
+* [GitHub Profile](https://github.com/jonschlinkert)
+* [Twitter Profile](https://twitter.com/jonschlinkert)
+* [LinkedIn Profile](https://linkedin.com/in/jonschlinkert)
+
+### License
+
+Copyright © 2019, [Jon Schlinkert](https://github.com/jonschlinkert).
+Released under the [MIT License](LICENSE).
+
+***
+
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.8.0, on March 27, 2019._

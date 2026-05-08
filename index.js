@@ -1,77 +1,150 @@
-'use strict';
+/*!
+ * is-glob <https://github.com/jonschlinkert/is-glob>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
 
-const SqlString = require('sql-escaper');
-
-const ConnectionConfig = require('./lib/connection_config.js');
-const parserCache = require('./lib/parsers/parser_cache.js');
-
-const Connection = require('./lib/connection.js');
-
-exports.createConnection = require('./lib/create_connection.js');
-exports.connect = exports.createConnection;
-exports.Connection = Connection;
-exports.ConnectionConfig = ConnectionConfig;
-
-const Pool = require('./lib/pool.js');
-const PoolCluster = require('./lib/pool_cluster.js');
-const createPool = require('./lib/create_pool.js');
-const createPoolCluster = require('./lib/create_pool_cluster.js');
-
-exports.createPool = createPool;
-
-exports.createPoolCluster = createPoolCluster;
-
-exports.createQuery = Connection.createQuery;
-
-exports.Pool = Pool;
-
-exports.PoolCluster = PoolCluster;
-
-exports.createServer = function (handler) {
-  const Server = require('./lib/server.js');
-  const s = new Server();
-  if (handler) {
-    s.on('connection', handler);
+var isExtglob = require('is-extglob');
+var chars = { '{': '}', '(': ')', '[': ']'};
+var strictCheck = function(str) {
+  if (str[0] === '!') {
+    return true;
   }
-  return s;
+  var index = 0;
+  var pipeIndex = -2;
+  var closeSquareIndex = -2;
+  var closeCurlyIndex = -2;
+  var closeParenIndex = -2;
+  var backSlashIndex = -2;
+  while (index < str.length) {
+    if (str[index] === '*') {
+      return true;
+    }
+
+    if (str[index + 1] === '?' && /[\].+)]/.test(str[index])) {
+      return true;
+    }
+
+    if (closeSquareIndex !== -1 && str[index] === '[' && str[index + 1] !== ']') {
+      if (closeSquareIndex < index) {
+        closeSquareIndex = str.indexOf(']', index);
+      }
+      if (closeSquareIndex > index) {
+        if (backSlashIndex === -1 || backSlashIndex > closeSquareIndex) {
+          return true;
+        }
+        backSlashIndex = str.indexOf('\\', index);
+        if (backSlashIndex === -1 || backSlashIndex > closeSquareIndex) {
+          return true;
+        }
+      }
+    }
+
+    if (closeCurlyIndex !== -1 && str[index] === '{' && str[index + 1] !== '}') {
+      closeCurlyIndex = str.indexOf('}', index);
+      if (closeCurlyIndex > index) {
+        backSlashIndex = str.indexOf('\\', index);
+        if (backSlashIndex === -1 || backSlashIndex > closeCurlyIndex) {
+          return true;
+        }
+      }
+    }
+
+    if (closeParenIndex !== -1 && str[index] === '(' && str[index + 1] === '?' && /[:!=]/.test(str[index + 2]) && str[index + 3] !== ')') {
+      closeParenIndex = str.indexOf(')', index);
+      if (closeParenIndex > index) {
+        backSlashIndex = str.indexOf('\\', index);
+        if (backSlashIndex === -1 || backSlashIndex > closeParenIndex) {
+          return true;
+        }
+      }
+    }
+
+    if (pipeIndex !== -1 && str[index] === '(' && str[index + 1] !== '|') {
+      if (pipeIndex < index) {
+        pipeIndex = str.indexOf('|', index);
+      }
+      if (pipeIndex !== -1 && str[pipeIndex + 1] !== ')') {
+        closeParenIndex = str.indexOf(')', pipeIndex);
+        if (closeParenIndex > pipeIndex) {
+          backSlashIndex = str.indexOf('\\', pipeIndex);
+          if (backSlashIndex === -1 || backSlashIndex > closeParenIndex) {
+            return true;
+          }
+        }
+      }
+    }
+
+    if (str[index] === '\\') {
+      var open = str[index + 1];
+      index += 2;
+      var close = chars[open];
+
+      if (close) {
+        var n = str.indexOf(close, index);
+        if (n !== -1) {
+          index = n + 1;
+        }
+      }
+
+      if (str[index] === '!') {
+        return true;
+      }
+    } else {
+      index++;
+    }
+  }
+  return false;
 };
 
-exports.PoolConnection = require('./lib/pool_connection.js');
-exports.authPlugins = require('./lib/auth_plugins');
-exports.escape = SqlString.escape;
-exports.escapeId = SqlString.escapeId;
-exports.format = SqlString.format;
-exports.raw = SqlString.raw;
+var relaxedCheck = function(str) {
+  if (str[0] === '!') {
+    return true;
+  }
+  var index = 0;
+  while (index < str.length) {
+    if (/[*?{}()[\]]/.test(str[index])) {
+      return true;
+    }
 
-exports.__defineGetter__(
-  'createConnectionPromise',
-  () => require('./promise.js').createConnection
-);
+    if (str[index] === '\\') {
+      var open = str[index + 1];
+      index += 2;
+      var close = chars[open];
 
-exports.__defineGetter__(
-  'createPoolPromise',
-  () => require('./promise.js').createPool
-);
+      if (close) {
+        var n = str.indexOf(close, index);
+        if (n !== -1) {
+          index = n + 1;
+        }
+      }
 
-exports.__defineGetter__(
-  'createPoolClusterPromise',
-  () => require('./promise.js').createPoolCluster
-);
-
-exports.__defineGetter__('Types', () => require('./lib/constants/types.js'));
-
-exports.__defineGetter__('Charsets', () =>
-  require('./lib/constants/charsets.js')
-);
-
-exports.__defineGetter__('CharsetToEncoding', () =>
-  require('./lib/constants/charset_encodings.js')
-);
-
-exports.setMaxParserCache = function (max) {
-  parserCache.setMaxCache(max);
+      if (str[index] === '!') {
+        return true;
+      }
+    } else {
+      index++;
+    }
+  }
+  return false;
 };
 
-exports.clearParserCache = function () {
-  parserCache.clearCache();
+module.exports = function isGlob(str, options) {
+  if (typeof str !== 'string' || str === '') {
+    return false;
+  }
+
+  if (isExtglob(str)) {
+    return true;
+  }
+
+  var check = strictCheck;
+
+  // optionally relax check
+  if (options && options.strict === false) {
+    check = relaxedCheck;
+  }
+
+  return check(str);
 };
