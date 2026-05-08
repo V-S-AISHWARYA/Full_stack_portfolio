@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio — V.S.Aishwarya</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="page-transition" id="pageTransition"></div>
+
+<div class="toast" id="toast"></div>
+
+<nav id="nav">
+  <a class="nav-logo" href="#" data-page="intro">V.S.Aishwarya</a>
+  <ul class="nav-links">
+    <li><a href="#" data-page="about">About Me</a></li>
+    <li><a href="#" data-page="work">Projects</a></li>
+    <li><a href="#" data-page="contact">Talk to Me</a></li>
+  </ul>
+  <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+    <span class="theme-icon-dark">🌙</span>
+    <span class="theme-icon-light">☀️</span>
+    <span class="theme-label-dark">Dark</span>
+    <span class="theme-label-light">Light</span>
+  </button>
+</nav>
+<section class="page active" id="intro">
+  <div class="intro-grid"></div>
+  <div class="intro-orb intro-orb-1"></div>
+  <div class="intro-orb intro-orb-2"></div>
+
+  <div class="intro-content">
+    <div class="intro-label" data-animate>✦ A second year Computer Science Engineering student who is passionate on full stack developing.</div>
+    <div style="font-size: medium;">
+    <h1 class="intro-name" data-animate data-delay="100">
+      <pre>
+      <span class="name-line">Hey there!!</span>
+      
+      <span class="name-line accent-text">V.S.Aishwarya here!</span>
+      </pre>
+    </h1>
+    </div>
+    <p class="intro-tagline" data-animate data-delay="220">
+      // Full-Stack Developer &amp; Creative Coder
+    </p>
+
+    <div class="intro-cta" data-animate data-delay="340">
+      <button class="btn btn-primary" data-page="work">View Work ↗</button>
+      <button class="btn btn-outline" data-page="contact">Let's Talk</button>
+    </div>
+
+    <div class="intro-theme-row" data-animate data-delay="460">
+      <span class="intro-theme-label">Choose your vibe:</span>
+      <div class="intro-theme-btns">
+        <button class="intro-theme-btn" id="btnDark" onclick="setTheme('dark')">
+          <span>🌙</span> Dark Mode
+        </button>
+        <button class="intro-theme-btn" id="btnLight" onclick="setTheme('light')">
+          <span>☀️</span> Light Mode
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="intro-scroll">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════════════ ABOUT ══════════════════════════ -->
+<section class="page" id="about">
+  <div class="page-inner">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About Me</h2>
+    </div>
+
+    <div class="about-grid">
+      <!-- Left: text -->
+      <div class="about-text">
+        <p>Hey! I'm <strong>V.S.Aishwarya</strong>, a full-stack developer who loves building things that live on the internet. I care deeply about crafting experiences that feel <strong>fast, beautiful, interactive and intuitive</strong>.</p>
+        <p>Studying in Loyola- ICAM College of Engineering and Technology in Chennai with a biology background, I am trying to solve <strong>complex problems into elegant digital solutions</strong>, from pixel-perfect UIs to scalable backend systems.</p>
+        <p>When I'm not shipping code, I'm probably exploring design systems, contributing to open-source, or deep-diving into the latest web technologies.</p>
+
+        <div class="skills-grid" id="skillsGrid">
+          <!-- Loaded from API -->
+          <div class="skill-tag skeleton"></div>
+          <div class="skill-tag skeleton"></div>
+          <div class="skill-tag skeleton"></div>
+          <div class="skill-tag skeleton"></div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="about-card">
+          <div class="about-card-img">
+            <span class="avatar-initials">V.S.Aishwarya</span>
+          </div>
+          <div class="about-card-info">
+            <div class="about-card-name">V.S.Aishwarya</div>
+            <div class="about-card-role">// Full-Stack Developer</div>
+          </div>
+        </div>
+
+        <div class="about-stats" id="statsGrid">
+          <!-- Loaded from API -->
+          <div class="stat"><span class="stat-num skeleton-text">—</span><span class="stat-label">Loading</span></div>
+          <div class="stat"><span class="stat-num skeleton-text">—</span><span class="stat-label">Loading</span></div>
+          <div class="stat"><span class="stat-num skeleton-text">—</span><span class="stat-label">Loading</span></div>
+        </div>
+
+        <a class="resume-bar" id="resumeBar" href="file:///C:/Users/Admin/OneDrive/Desktop/resume.pdf" download>
+          <div class="resume-bar-text">
+            <span class="resume-bar-label">Download</span>
+            <span class="resume-bar-title">My Resume — PDF</span>
+          </div>
+          <div class="resume-bar-icon" id="resumeIcon">↓</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="work">
+  <div class="page-inner">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Work</h2>
+    </div>
+
+    <div class="projects-list" id="projectsList">
+      <!-- Loaded from API -->
+      <div class="project-skeleton">
+        <div class="sk-line sk-w40"></div>
+        <div class="sk-line sk-w70 sk-tall"></div>
+        <div class="sk-line sk-w90"></div>
+      </div>
+      <div class="project-skeleton">
+        <div class="sk-line sk-w40"></div>
+        <div class="sk-line sk-w70 sk-tall"></div>
+        <div class="sk-line sk-w90"></div>
+      </div>
+    </div>
+
+    <div class="marquee-section">
+      <div class="marquee-track" id="marquee">
+        <span class="marquee-item"><span class="m-dot">✦</span>Open to Freelance</span>
+        <span class="marquee-item"><span class="m-dot">✦</span>Full-Stack Developer</span>
+        <span class="marquee-item"><span class="m-dot">✦</span>Chennai, India</span>
+        <span class="marquee-item"><span class="m-dot">✦</span>Available 2025</span>
+        <span class="marquee-item"><span class="m-dot">✦</span>Open to Freelance</span>
+        <span class="marquee-item"><span class="m-dot">✦</span>Full-Stack Developer</span>
+        <span class="marquee-item"><span class="m-dot">✦</span>Chennai, India</span>
+        <span class="marquee-item"><span class="m-dot">✦</span>Available 2025</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="contact">
+  <div class="page-inner">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Talk to Me</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <h3 class="contact-tagline">Got an idea? <em>Let's build</em> something remarkable.</h3>
+        <p>Whether it's a startup idea, a collaboration, a question, or just a wave. Drop your thoughts and I'll get back to you within 24 hours.</p>
+
+        <div class="contact-links">
+          <a class="contact-link-item" href="mailto:you@email.com">
+            <div class="contact-link-icon">✉️</div>
+            <div class="contact-link-info">
+              <div class="contact-link-label">Email</div>
+              <div class="contact-link-val">v.s.aishwarya2006@gmail.com</div>
+            </div>
+          </a>
+          <a class="contact-link-item" href="https://github.com/V-S-AISHWARYA" target="_blank" rel="noopener">
+            <div class="contact-link-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </div>
+            <div class="contact-link-info">
+              <div class="contact-link-label">GitHub</div>
+              <div class="contact-link-val">@V-S-AISHWARYA</div>
+            </div>
+          </a>
+          <a class="contact-link-item" href="https://www.linkedin.com/in/v-s-aishwarya-77877b335/" target="_blank" rel="noopener">
+            <div class="contact-link-icon">💼</div>
+            <div class="contact-link-info">
+              <div class="contact-link-label">LinkedIn</div>
+              <div class="contact-link-val">V.S.Aishwarya</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="idea-form">
+        <h3>Share Your Idea 💡</h3>
+        <p class="form-sub">// tell me what's on your mind</p>
+
+        <div id="formContent">
+          <div class="form-group">
+            <label for="fname">V.S.Aishwarya</label>
+            <input type="text" id="fname" placeholder="What should I call you?" autocomplete="name"/>
+          </div>
+          <div class="form-group">
+            <label for="femail">Email</label>
+            <input type="email" id="femail" placeholder="Where can I reach you?" autocomplete="email"/>
+          </div>
+          <div class="form-group">
+            <label>What's the vibe?</label>
+            <div class="form-mood" id="moodBtns">
+              <button class="mood-btn" data-mood="collab">🤝<span class="mood-label">Collab</span></button>
+              <button class="mood-btn" data-mood="idea">💡<span class="mood-label">Idea</span></button>
+              <button class="mood-btn" data-mood="chat">☕<span class="mood-label">Just Chat</span></button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fmessage">Your Idea / Message</label>
+            <textarea id="fmessage" placeholder="Describe your idea, project, or just say hello. The wilder the better..." rows="5"></textarea>
+            <div class="char-count"><span id="charCount">0</span> / 2000</div>
+          </div>
+          <button class="send-btn" id="sendBtn">Send It ↗</button>
+        </div>
+
+        <div class="success-state" id="successState">
+          <div class="success-icon">✦</div>
+          <h4>Message received!</h4>
+          <p>I'll get back to you within 24 hours.<br/>Thanks for reaching out.</p>
+          <button class="btn btn-outline" style="margin-top:20px" onclick="resetForm()">Send Another</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/js/main.js"></script>
+</body>
+</html>
